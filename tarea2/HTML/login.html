@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Iniciar Sesión</title>
+    <link rel="stylesheet" href="../Public/CSS/estilos.css">
+</head>
+<body>
+
+    <div class="login-container">
+        <h2>Iniciar Sesión</h2>
+
+        <p class="error-message" id="error-message"></p>  <form action="../PHP/login.php" method="post">  <div class="form-group">
+                <label for="usuario">Usuario:</label>
+                <input type="text" id="usuario" name="usuario" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Contraseña:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Iniciar Sesión">
+            </div>
+            <p>¿No tienes cuenta? <a href="../PHP/registro.php">Regístrate</a></p>
+        </form>
+    </div>
+
+</body>
+</html>

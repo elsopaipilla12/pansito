@@ -1,0 +1,148 @@
+/* Estilos generales */
+body.pagina-autor {
+    min-height: 100vh;
+    margin: 0;
+    background-color: #000000;
+    font-family: Arial, sans-serif;
+    padding: 20px 10px;
+}
+
+/* Contenedor principal */
+.contenedor-principal {
+    display: flex;
+    width: 95%;
+    max-width: 1400px;
+    margin: 30px auto;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 30px;
+}
+
+body.pagina-autor {
+    background: url('../IMG/fondo.png') fixed;
+    background-size: cover;
+}
+
+/* Formulario morado (izquierda) */
+.formulario-articulo {
+    width: 55%;
+    min-width: 500px;
+    background: #bb97bd;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: left;
+    margin-right: auto;
+    flex-shrink: 0;
+}
+
+/* Decoración del panel */
+.formulario-articulo::before {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: 50%;
+    width: calc(100% + 4px);
+    height: 36px;
+    background-color: #50295c;
+    border-radius: 10px 10px 0 0;
+    transform: translateX(-50%);
+    z-index: -1;
+}
+
+.formulario-articulo::after {
+    content: "";
+    position: absolute;
+    top: 7px;
+    left: 20px;
+    width: 20px;
+    height: 20px;
+    background-color: rgb(212, 48, 212);
+    border-radius: 50%;
+    box-shadow: 30px 0 0 rgb(212, 48, 212), 60px 0 0 rgb(212, 48, 212);
+}
+
+/* Estilos del formulario (mantén los que tienes) */
+
+/* Tabla de tópicos */
+.tabla-articulos {
+    width: 45%;
+    min-width: 450px;
+    background: #bb97bd;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+}
+
+.tabla-articulos h3 {
+    color: #4a148c;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.tabla-articulos table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid #d1c4e9;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.tabla-articulos th {
+    background-color: #7b1fa2;
+    color: white;
+    padding: 12px;
+    text-align: left;
+}
+
+.tabla-articulos td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #d1c4e9;
+    background-color: #f3e5f5;
+}
+
+.tabla-articulos tr:nth-child(even) td {
+    background-color: #e1bee7;
+}
+
+.tabla-articulos tr:hover td {
+    background-color: #ce93d8;
+    transition: background-color 0.3s ease;
+}
+
+/* Responsive mejorado */
+@media (max-width: 1000px) {
+    .contenedor-principal {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .formulario-articulo,
+    .tabla-articulos {
+        width: 90%;
+        min-width: unset;
+        margin: 0 auto 30px;
+    }
+}
+
+
+/* Estilo para el botón de cerrar sesión */
+.btn-cerrar-sesion {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 8px 16px;
+    background-color: #72081f; /* Rojo vino para destacar */
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    z-index: 1000;
+    transition: background-color 0.3s;
+}
+
+.btn-cerrar-sesion:hover {
+    background-color: #9a0a2a; /* Rojo más claro al pasar mouse */
+}
