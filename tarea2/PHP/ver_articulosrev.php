@@ -21,12 +21,12 @@ if (!isset($_SESSION["usuario_rut"]) || $_SESSION["usuario_tipo"] !== "revisor")
     <div class="ver-revisores">
         <div class="tabla-revisores">
             <div class="tabla-articulos">
-                <h3>Bienvenido <?= htmlspecialchars($_SESSION["usuario_nombre"] ?? 'Autor')?></h3> 
+                <h3>Bienvenido <?= htmlspecialchars($_SESSION["usuario_nombre"] ?? 'Revisor')?></h3> 
                 <h3>Artículos Evaluados</h3> 
                 <table class="table">
                     <thead>
                         <tr>
-                            <th scope="col">ID Artículo</th>
+                            <th scope="col">Tópicos</th>  <!-- Cambiado de "ID Artículo" a "Tópicos" -->
                             <th scope="col">Título</th>
                             <th scope="col">Resumen</th>
                             <th scope="col">Estado</th>
@@ -36,12 +36,13 @@ if (!isset($_SESSION["usuario_rut"]) || $_SESSION["usuario_tipo"] !== "revisor")
                     <tbody>
                         <?php
                         include "conexion.php";
-                        // Cambiamos la consulta para usar la vista
-                        $sql = $conexion->query("SELECT * FROM ver_evaluados");
+                        $sql = $conexion->query("SELECT * FROM ver_ev");
                         while($datos = $sql->fetch_object()) { 
+                            // Mostramos "Sin tópicos" si no hay ninguno definido
+                            $topicos = !empty($datos->topicos) ? $datos->topicos : 'Sin tópicos';
                         ?>
                         <tr>
-                            <td><?= htmlspecialchars($datos->id_articulo) ?></td>
+                            <td><?= htmlspecialchars($topicos) ?></td>  <!-- Mostramos los tópicos -->
                             <td><?= htmlspecialchars($datos->titulo) ?></td>
                             <td><?= htmlspecialchars($datos->resumen) ?></td>
                             <td><?= htmlspecialchars($datos->estado) ?></td>
