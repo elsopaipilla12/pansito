@@ -4,6 +4,12 @@ if (!isset($_SESSION["usuario_rut"]) || $_SESSION["usuario_tipo"] !== "autor") {
     header("Location: login.php");
     exit();
 }
+
+// Obtener datos del autor logueado
+include "conexion.php";
+$rut_autor = $_SESSION["usuario_rut"];
+$sql_autor = $conexion->query("SELECT * FROM autores WHERE rut_autor = '$rut_autor'");
+$autor_loguedo = $sql_autor->fetch_object();
 ?>
 
 <!DOCTYPE html>
@@ -13,15 +19,16 @@ if (!isset($_SESSION["usuario_rut"]) || $_SESSION["usuario_tipo"] !== "autor") {
     <title>Panel del Autor</title>
     <link rel="stylesheet" href="../Public/CSS/estilohome.css">
     <link rel="stylesheet" href="../Public/CSS/estilos.css">
+    <script src="https://kit.fontawesome.com/23ed4a8228.js" crossorigin="anonymous"></script>
 </head>
 <body class="pagina-autor">
-    <body class="pagina-autor">
+    <a href="home_autor.php" class="btn-volver"><i class="fa-solid fa-arrow-left"></i> Volver</a>
     <a href="logout.php" class="btn-cerrar-sesion">Cerrar sesión</a>
     <div class="panel-autor">
         <div class="contenedor-principal">
             <!-- Formulario a la izquierda -->
             <div class="formulario-articulo">
-                <h2>Bienvenido, autor</h2>
+                <h2>Bienvenido, <?= htmlspecialchars($autor_loguedo->nombre_autor ?? 'Autor') ?></h2>
                 <form action="procesar_articulo.php" method="post">
                     <h3>Datos del Artículo</h3>
                     <label>Título:</label>
@@ -34,24 +41,33 @@ if (!isset($_SESSION["usuario_rut"]) || $_SESSION["usuario_tipo"] !== "autor") {
                     <input type="text" name="topicos" required><br>
 
                     <h3>Autores del artículo</h3>
-                    <label>Nombre Autor 1:</label>
-                    <input type="text" name="autor[0][nombre]" required>
-                    <label>Email:</label>
-                    <input type="email" name="autor[0][email]" required><br>
+                    <!-- Autor 1 (logueado) -->
+                    <div class="autor-fijo">
+                        <label>Autor 1 (Tu):</label>
+                        <input type="text" value="<?= htmlspecialchars($autor_loguedo->nombre_autor) ?>" readonly>
+                        <input type="hidden" name="autor[0][nombre]" value="<?= htmlspecialchars($autor_loguedo->nombre_autor) ?>">
+                        <input type="hidden" name="autor[0][email]" value="<?= htmlspecialchars($autor_loguedo->correo_autor) ?>">
+                    </div>
 
-                    <label>Nombre Autor 2:</label>
-                    <input type="text" name="autor[1][nombre]">
-                    <label>Email:</label>
-                    <input type="email" name="autor[1][email]"><br>
+                    <!-- Autor 2 (opcional) -->
+                    <div class="autor-opcional">
+                        <label>Autor 2 (Opcional):</label>
+                        <input type="text" name="autor[1][nombre]">
+                        <label>Email:</label>
+                        <input type="email" name="autor[1][email]">
+                    </div>
 
-                    <label>Nombre Autor 3:</label>
-                    <input type="text" name="autor[2][nombre]">
-                    <label>Email:</label>
-                    <input type="email" name="autor[2][email]"><br>
+                    <!-- Autor 3 (opcional) -->
+                    <div class="autor-opcional">
+                        <label>Autor 3 (Opcional):</label>
+                        <input type="text" name="autor[2][nombre]">
+                        <label>Email:</label>
+                        <input type="email" name="autor[2][email]">
+                    </div>
                     
                     <label>Selecciona autor de contacto:</label>
                     <select name="autor_contacto_index" required>
-                        <option value="0">Autor 1</option>
+                        <option value="0">Autor 1 (<?= htmlspecialchars($autor_loguedo->nombre_autor) ?>)</option>
                         <option value="1">Autor 2</option>
                         <option value="2">Autor 3</option>
                     </select><br>
@@ -60,19 +76,17 @@ if (!isset($_SESSION["usuario_rut"]) || $_SESSION["usuario_tipo"] !== "autor") {
                 </form>
             </div>
             
-            
             <div class="tabla-articulos">
-                <h3>Tópicos de articulos</h3>
+                <h3>Tópicos de artículos</h3>
                 <table class="table">
                     <thead>
                         <tr>
-                            <th scope="col">N°Topico</th>
-                            <th scope="col">Topico</th>
+                            <th scope="col">N° Tópico</th>
+                            <th scope="col">Tópico</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
-                        include "conexion.php";
                         $sql = $conexion->query("SELECT * FROM especialidad_topico");
                         while($datos = $sql->fetch_object()) { 
                         ?>
