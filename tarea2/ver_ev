@@ -1,0 +1,21 @@
+CREATE VIEW ver_ev AS
+SELECT 
+    GROUP_CONCAT(et.tipo SEPARATOR ', ') AS topicos,
+    a.titulo,
+    a.resumen,
+    a.estado,
+    c.nombre_autor AS autor
+FROM 
+    articulos a
+JOIN 
+    envio_articulo b ON a.id_articulo = b.id_articulo
+JOIN 
+    autores c ON b.rut_autor = c.rut_autor
+LEFT JOIN 
+    topicos_articulos ta ON a.id_articulo = ta.id_articulo
+LEFT JOIN 
+    especialidad_topico et ON ta.id_especialidad_topico = et.id_especialidad_topico
+WHERE 
+    a.estado = 'evaluado'
+GROUP BY 
+    a.id_articulo, a.titulo, a.resumen, a.estado, c.nombre_autor;
